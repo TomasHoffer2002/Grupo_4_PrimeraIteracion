@@ -15,8 +15,8 @@ public class PremioDAO {
             con.createQuery(sql)
                .addParameter("nombre", premio.getNombre())
                .addParameter("descripcion", premio.getDescripcion())
-               .addParameter("puntosNecesarios", premio.getPuntosNecesarios())
-               .addParameter("comercioIdComercio", premio.getComercioIdComercio())
+               .addParameter("puntosNecesarios", premio.getPuntos_necesarios())
+               .addParameter("comercioIdComercio", premio.getComercio_idComercio())
                .addParameter("cantidad", premio.getCantidad())
                .executeUpdate();
             return true;
@@ -35,5 +35,23 @@ public class PremioDAO {
             return count > 0;
         }
     }
-
+    //Metodo para buscar premio por id
+    public Premio findById(int idPremio) {
+        String sql = "SELECT * FROM premio WHERE idPremio = :id";
+        try (Connection con = Sql2oDAO.getSql2o().open()) {
+            return con.createQuery(sql)
+                      .addParameter("id", idPremio)
+                      .executeAndFetchFirst(Premio.class);
+        }
+    }
+    //Metodo para actualizar la cantidad de premios
+    public void updateCantidad(int idPremio, int nuevaCantidad) {
+        String sql = "UPDATE premio SET cantidad = :cantidad WHERE idPremio = :id";
+        try (Connection con = Sql2oDAO.getSql2o().open()) {
+            con.createQuery(sql)
+               .addParameter("cantidad", nuevaCantidad)
+               .addParameter("id", idPremio)
+               .executeUpdate();
+        }
+    }
 }
