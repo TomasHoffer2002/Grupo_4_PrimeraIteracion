@@ -14,10 +14,10 @@ public class PremioService {
         if (premio.getNombre() == null || premio.getNombre().isEmpty()) {
             return "Error: El nombre es obligatorio";
         }
-        if (premio.getPuntosNecesarios() <= 0) {
+        if (premio.getPuntos_necesarios() <= 0) {
             return "Error: Los puntos necesarios deben ser mayores a 0";
         }
-        if (!premioDAO.existeComercio(premio.getComercioIdComercio())) {
+        if (!premioDAO.existeComercio(premio.getComercio_idComercio())) {
             return "Error: El comercio no existe";
         }
         if (premio.getCantidad() <= 0) {

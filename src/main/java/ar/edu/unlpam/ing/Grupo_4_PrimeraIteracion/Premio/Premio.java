@@ -7,7 +7,7 @@ public class Premio {
     private int idPremio;
     private String nombre;
     private String descripcion;
-    private int puntosNecesarios;
+    private int puntos_necesarios;
     private int cantidad;
-    private int comercioIdComercio;
+    private int Comercio_idComercio;
 }
