@@ -8,15 +8,15 @@ import ar.edu.unlpam.ing.Grupo_4_PrimeraIteracion.util.Sql2oDAO;
 @Repository
 public class PremioDAO {
     public boolean insert(Premio premio) {
-        String sql = "INSERT INTO premio (nombre, descripcion, puntos_necesarios, Comercio_idComercio, cantidad) " +
-                     "VALUES (:nombre, :descripcion, :puntosNecesarios, :comercioIdComercio, :cantidad)";
+         String sql = "INSERT INTO premio (nombre, descripcion, puntos_necesarios, Comercio_idComercio, cantidad) " +
+                 "VALUES (:nombre, :descripcion, :puntos_necesarios, :Comercio_idComercio, :cantidad)";
 
         try (Connection con = Sql2oDAO.getSql2o().open()) {
             con.createQuery(sql)
                .addParameter("nombre", premio.getNombre())
                .addParameter("descripcion", premio.getDescripcion())
-               .addParameter("puntosNecesarios", premio.getPuntos_necesarios())
-               .addParameter("comercioIdComercio", premio.getComercio_idComercio())
+               .addParameter("puntos_necesarios", premio.getPuntos_necesarios())
+               .addParameter("Comercio_idComercio", premio.getComercio_idComercio())
                .addParameter("cantidad", premio.getCantidad())
                .executeUpdate();
             return true;
