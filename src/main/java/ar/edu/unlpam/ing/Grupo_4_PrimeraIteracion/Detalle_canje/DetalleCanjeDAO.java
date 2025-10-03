@@ -5,10 +5,11 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
 
+import ar.edu.unlpam.ing.Grupo_4_PrimeraIteracion.interfaces.DAODetalleCanje;
 import ar.edu.unlpam.ing.Grupo_4_PrimeraIteracion.util.Sql2oDAO;
 
 @Repository
-public class DetalleCanjeDAO {
+public class DetalleCanjeDAO implements DAODetalleCanje{
     public void insert(int idUsuario, int idPremio, LocalDateTime fecha) {
         String sql = "INSERT INTO detalle_canje (Usuario_idUsuario, Premio_idPremio, fecha_canje) " +
                      "VALUES (:usuario, :premio, :fecha)";

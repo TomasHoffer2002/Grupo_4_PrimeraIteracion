@@ -3,10 +3,12 @@ package ar.edu.unlpam.ing.Grupo_4_PrimeraIteracion.Usuario;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
 
+import ar.edu.unlpam.ing.Grupo_4_PrimeraIteracion.interfaces.DAOUsuario;
 import ar.edu.unlpam.ing.Grupo_4_PrimeraIteracion.util.Sql2oDAO;
 
 @Repository
-public class UsuarioDAO {
+public class UsuarioDAO implements DAOUsuario {
+    @Override
     public Usuario findById(int idUsuario) {
         String sql = "SELECT * FROM usuario WHERE idUsuario = :id";
         try (Connection con = Sql2oDAO.getSql2o().open()) {
@@ -15,7 +17,7 @@ public class UsuarioDAO {
                       .executeAndFetchFirst(Usuario.class);
         }
     }
-
+    @Override
     public void updatePuntos(int idUsuario, int nuevosPuntos) {
         String sql = "UPDATE usuario SET puntos_asociados = :puntos WHERE idUsuario = :id";
         try (Connection con = Sql2oDAO.getSql2o().open()) {
