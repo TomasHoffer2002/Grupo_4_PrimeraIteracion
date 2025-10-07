@@ -10,6 +10,7 @@ import ar.edu.unlpam.ing.Grupo_4_PrimeraIteracion.util.Sql2oDAO;
 
 @Repository
 public class DetalleCanjeDAO implements DAODetalleCanje{
+    @Override
     public void insert(int idUsuario, int idPremio, LocalDateTime fecha) {
         String sql = "INSERT INTO detalle_canje (Usuario_idUsuario, Premio_idPremio, fecha_canje) " +
                      "VALUES (:usuario, :premio, :fecha)";
