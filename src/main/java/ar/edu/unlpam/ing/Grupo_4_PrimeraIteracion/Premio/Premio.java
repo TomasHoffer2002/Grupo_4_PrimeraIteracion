@@ -13,4 +13,5 @@ public class Premio {
     private int cantidad;
     @JsonProperty("Comercio_idComercio")
     private int Comercio_idComercio;
+    private String categoria;
 }

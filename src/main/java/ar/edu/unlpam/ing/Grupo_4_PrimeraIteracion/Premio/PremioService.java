@@ -1,5 +1,7 @@
 package ar.edu.unlpam.ing.Grupo_4_PrimeraIteracion.Premio;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,4 +29,12 @@ public class PremioService {
         boolean insertado = premioDAO.insert(premio);
         return insertado ? "Premio agregado correctamente" : "Error al insertar el premio";
     }
+
+    public List<Premio> obtenerPremiosPorCategoria(String categoria) {
+        if (categoria == null || categoria.isBlank()) {
+            throw new IllegalArgumentException("La categoría no puede ser nula ni vacía");
+        }
+        return premioDAO.findByCategoria(categoria);
+    }
+
 }

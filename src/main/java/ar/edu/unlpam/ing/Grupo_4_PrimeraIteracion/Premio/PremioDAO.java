@@ -1,5 +1,8 @@
 package ar.edu.unlpam.ing.Grupo_4_PrimeraIteracion.Premio;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
 
@@ -10,8 +13,8 @@ import ar.edu.unlpam.ing.Grupo_4_PrimeraIteracion.util.Sql2oDAO;
 public class PremioDAO implements DAOPremio{
     @Override
     public boolean insert(Premio premio) {
-         String sql = "INSERT INTO premio (nombre, descripcion, puntos_necesarios, Comercio_idComercio, cantidad) " +
-                 "VALUES (:nombre, :descripcion, :puntos_necesarios, :Comercio_idComercio, :cantidad)";
+         String sql = "INSERT INTO premio (nombre, descripcion, puntos_necesarios, Comercio_idComercio, cantidad, categoria) " +
+                 "VALUES (:nombre, :descripcion, :puntos_necesarios, :Comercio_idComercio, :cantidad, :categoria)";
 
         try (Connection con = Sql2oDAO.getSql2o().open()) {
             con.createQuery(sql)
@@ -20,6 +23,7 @@ public class PremioDAO implements DAOPremio{
                .addParameter("puntos_necesarios", premio.getPuntos_necesarios())
                .addParameter("Comercio_idComercio", premio.getComercio_idComercio())
                .addParameter("cantidad", premio.getCantidad())
+               .addParameter("categoria", premio.getCategoria())
                .executeUpdate();
             return true;
         } catch (Exception e) {
@@ -33,8 +37,8 @@ public class PremioDAO implements DAOPremio{
         String sql = "SELECT COUNT(*) FROM comercio WHERE idComercio = :id";
         try (Connection con = Sql2oDAO.getSql2o().open()) {
             int count = con.createQuery(sql)
-                       .addParameter("id", idComercio)
-                       .executeScalar(Integer.class);
+                .addParameter("id", idComercio)
+                .executeScalar(Integer.class);
             return count > 0;
         }
     }
@@ -44,9 +48,22 @@ public class PremioDAO implements DAOPremio{
         String sql = "SELECT * FROM premio WHERE idPremio = :id";
         try (Connection con = Sql2oDAO.getSql2o().open()) {
             return con.createQuery(sql)
-                      .addParameter("id", idPremio)
-                      .executeAndFetchFirst(Premio.class);
-        }
+                .addParameter("id", idPremio)
+                .executeAndFetchFirst(Premio.class);
+        }   
+    }
+    //Metodo para buscar premio por categoria
+    @Override
+    public List<Premio> findByCategoria(String categoria) {
+        String sql = "SELECT * FROM premio WHERE categoria = :categoria";
+        try (Connection con = Sql2oDAO.getSql2o().open()) {
+            return (List<Premio>) con.createQuery(sql)
+                .addParameter("categoria", categoria)
+                .executeAndFetch(Premio.class);
+    } catch (Exception e) {
+        System.err.println("Error al buscar premios por categoría: " + e.getMessage());
+        return Collections.emptyList();
+    }
     }
     //Metodo para actualizar la cantidad de premios
     @Override
