@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+# Archivos de la base de datos que contienen credenciales locales
+src\main\java\ar\edu\unlpam\ing\Grupo_4_PrimeraIteracion\util\Sql2oDAO.java
