@@ -8,4 +8,6 @@ public class GreenMachine {
     private int cantidadMaxima;
     private int cantidadActual;
     private int Comercio_idComercio;
+    private String nombreComercio;
+    private String ubicacionComercio;
 }
