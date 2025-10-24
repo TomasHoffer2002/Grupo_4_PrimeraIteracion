@@ -9,7 +9,20 @@ import ar.edu.unlpam.ing.Grupo_4_PrimeraIteracion.util.Sql2oDAO;
 public class GreenMachineDAO implements DAOGreenMachine{
  @Override
     public List<GreenMachine> listarAltoNivel(int umbralCalculado) {
-        String sql = "SELECT * FROM greenMachines WHERE cantidadActual >= :nivel";
+        String sql = "SELECT \r\n" + //
+                        "    gm.idMaquina, \r\n" + //
+                        "    gm.cantidadMaxima, \r\n" + //
+                        "    gm.cantidadActual,\r\n" + //
+                        "    gm.Comercio_idComercio,\r\n" + //
+                        "    -- Aquí seleccionas los campos de la tabla Comercio\r\n" + //
+                        "    c.nombre AS nombreComercio, \r\n" + //
+                        "    c.direccion AS ubicacionComercio\r\n" + //
+                        "FROM \r\n" + //
+                        "    greenMachines gm\r\n" + //
+                        "JOIN \r\n" + //
+                        "    Comercio c ON gm.Comercio_idComercio = c.idComercio\r\n" + //
+                        "WHERE \r\n" + //
+                        "    gm.cantidadActual >= :nivel;";
         try (Connection con = Sql2oDAO.getSql2o().open()) {
             return con.createQuery(sql)
                 .addParameter("nivel", umbralCalculado)
