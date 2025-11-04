@@ -7,29 +7,14 @@ import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
 
 import ar.edu.unlpam.ing.Grupo_4_PrimeraIteracion.interfaces.DAOPremio;
+import ar.edu.unlpam.ing.Grupo_4_PrimeraIteracion.util.GenericDAO;
 import ar.edu.unlpam.ing.Grupo_4_PrimeraIteracion.util.Sql2oDAO;
 
 @Repository
-public class PremioDAO implements DAOPremio{
+public class PremioDAO extends GenericDAO<Premio> implements DAOPremio{
     @Override
     public boolean insert(Premio premio) {
-         String sql = "INSERT INTO premio (nombre, descripcion, puntos_necesarios, Comercio_idComercio, cantidad, categoria) " +
-                 "VALUES (:nombre, :descripcion, :puntos_necesarios, :Comercio_idComercio, :cantidad, :categoria)";
-
-        try (Connection con = Sql2oDAO.getSql2o().open()) {
-            con.createQuery(sql)
-               .addParameter("nombre", premio.getNombre())
-               .addParameter("descripcion", premio.getDescripcion())
-               .addParameter("puntos_necesarios", premio.getPuntos_necesarios())
-               .addParameter("Comercio_idComercio", premio.getComercio_idComercio())
-               .addParameter("cantidad", premio.getCantidad())
-               .addParameter("categoria", premio.getCategoria())
-               .executeUpdate();
-            return true;
-        } catch (Exception e) {
-            System.err.println("Error insertando premio: " + e.getMessage());
-            return false;
-        }
+        return super.insert(premio, "Premio"); // se llama al metodo de la clase abstracta GenericDAO
     }
     // Verifica si el comercio existe
     @Override
